@@ -1,0 +1,135 @@
+main {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 120px;
+}
+
+.product-wrapper {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+
+  .container {
+    height: 90%;
+  }
+
+  .product {
+    display: flex;
+    flex-direction: column;
+    height: 240px;
+    width: 240px;
+    background-color: white;
+    padding: 10px;
+    cursor: pointer;
+
+    &__img-wrapper {
+      height: 50%;
+    }
+    &__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &__info {
+      height: 50%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    &__title {
+      font-weight: 700;
+    }
+
+    &__price {
+      font-weight: 100;
+      opacity: 0.5;
+    }
+
+    &__sum {
+      font-weight: 100;
+      opacity: 0.5;
+    }
+
+    &__icon {
+      height: 100%;
+      cursor: pointer;
+    }
+
+    &__function {
+      height: 10%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+    &__quantity {
+      font-weight: 700;
+    }
+  }
+
+  .product-on-cart {
+    display: flex;
+    flex-direction: column;
+    height: 240px;
+    width: 240px;
+    background-color: #5cf143;
+    padding: 10px;
+    cursor: pointer;
+
+    &__img-wrapper {
+      height: 50%;
+    }
+    &__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &__info {
+      height: 50%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    &__title {
+      font-weight: 700;
+    }
+
+    &__price {
+      font-weight: 100;
+      opacity: 0.5;
+    }
+
+    &__sum {
+      font-weight: 100;
+      opacity: 0.5;
+    }
+
+    &__icon {
+      height: 100%;
+      cursor: pointer;
+    }
+
+    &__function {
+      height: 10%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+  }
+}
+
+@media screen and (max-width: 614px) {
+  main {
+    margin-top: 204px;
+  }
+}
