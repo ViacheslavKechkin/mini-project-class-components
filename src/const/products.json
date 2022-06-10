@@ -1,0 +1,65 @@
+[
+    {
+      "id": "1",
+      "title": "Фен",
+      "price": 10,
+      "quantity": 30,
+      "count": 0
+    },
+    {
+      "id": "2",
+      "title": "Чайник",
+      "price": 20,
+      "quantity": 30,
+      "count": 0
+    },
+    {
+      "id": "3",
+      "title": "Холодильник",
+      "price": 30,
+      "quantity": 30,
+      "count": 0
+    },
+    {
+      "id": "4",
+      "title": "Стиральная машина",
+      "price": 40,
+      "quantity": 30,
+      "count": 0
+    },
+    {
+      "id": "5",
+      "title": "Кондиционер",
+      "price": 50,
+      "quantity": 30,
+      "count": 0
+    },
+    {
+      "id": "6",
+      "title": "Телефон",
+      "price": 60,
+      "quantity": 30,
+      "count": 0
+    },
+    {
+      "id": "7",
+      "title": "Телевизор",
+      "price": 70,
+      "quantity": 30,
+      "count": 0
+    },
+    {
+      "id": "8",
+      "title": "Ноутбук",
+      "price": 80,
+      "quantity": 30,
+      "count": 0
+    },
+    {
+      "id": "9",
+      "title": "Фен 1",
+      "price": 90,
+      "quantity": 30,
+      "count": 0
+    }
+  ]

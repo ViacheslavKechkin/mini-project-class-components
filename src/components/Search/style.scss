@@ -12,7 +12,7 @@ header {
   justify-content: center;
   gap: 15px;
   font-size: 15px;
-  padding: 40px 0;
+  padding: 40px 20px;
 
   .btn-search {
     font-weight: 700;
@@ -22,6 +22,9 @@ header {
     font-size: 15px;
     border-radius: 2px;
     cursor: pointer;
+  }
+  .btn-search:hover {
+    box-shadow: 0 0 5px #5cf143;
   }
 
   .search-product {
@@ -33,7 +36,7 @@ header {
   }
 
   .sum-product {
-    width: 280px;
+    font-size: 19px;
     word-wrap: break-word;
   }
 }
