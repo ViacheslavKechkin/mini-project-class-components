@@ -1,25 +1,22 @@
 import React, { PureComponent } from "react";
 
-import plus from "../../assets/icon/plus.svg";
-import minus from "../../assets/icon/minus.svg";
-import productImg from "../../assets/product.jpeg";
+import plus from "./assets/icon/plus.svg";
+import minus from "./assets/icon/minus.svg";
+import productImg from "./assets/product.jpeg";
 
 import "./style.scss";
 
 class Product extends PureComponent {
   render() {
     const {
-      openDeleteWindow,
-      addProduct,
-      changeQuantity,
+      onHandleDeleteWindow,
+      onHandleAddProduct,
+      onHandleQuantity,
       el,
       index,
-      id,
-      title,
-      price,
-      count,
-      quantity,
     } = this.props;
+
+    const { id, title, price, count, quantity } = el;
 
     return (
       <div
@@ -27,9 +24,11 @@ class Product extends PureComponent {
         key={`id-${id}`}
       >
         <div
-          className="container"
+          className="product-container"
           onClick={() =>
-            count ? openDeleteWindow(true, el, index) : addProduct(el, index)
+            count
+              ? onHandleDeleteWindow(true, el, index)
+              : onHandleAddProduct(el)
           }
         >
           <div className="product__img-wrapper">
@@ -42,19 +41,35 @@ class Product extends PureComponent {
           </div>
         </div>
         <div className="product__function">
-          <img
-            className="product__icon"
-            onClick={() => changeQuantity(el, true, index)}
-            src={minus}
-            alt="decrease"
-          />
+          <button
+            className="product__button"
+            onClick={() => onHandleQuantity(el, true)}
+          >
+            <img
+              className={
+                count
+                  ? "product__icon"
+                  : "product__icon product__icon--inactive"
+              }
+              src={minus}
+              alt="decrease"
+            />
+          </button>
           <div className="product__quantity">{count}</div>
-          <img
-            className="product__icon"
-            onClick={() => changeQuantity(el, false, index)}
-            src={plus}
-            alt="increase"
-          />
+          <button
+            className="product__button"
+            onClick={() => onHandleQuantity(el, false)}
+          >
+            <img
+              className={
+                count
+                  ? "product__icon"
+                  : "product__icon product__icon--inactive"
+              }
+              src={plus}
+              alt="increase"
+            />
+          </button>
         </div>
       </div>
     );

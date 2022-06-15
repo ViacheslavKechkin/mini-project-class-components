@@ -1,149 +1,147 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 
 import { ToastContainer } from "react-toastify";
 
 import Footer from "./components/Footer";
 import Search from "./components/Search";
 import Products from "./components/Products";
-import DeleteProduct from "./components/DeleteProduct";
+import DeletionNotification from "./components/DeletionNotification";
 
 import productData from "./const/products.json";
 
-import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
 
-class App extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: productData,
-      sum: 0,
-      titleFind: "",
-      confirmationDelete: false,
-      elementDelete: {},
-    };
-    this.productList = [...this.state.products];
-  }
-
-  openDeleteWindow = (value, el, index) => {
-    this.setState({ confirmationDelete: value });
-    this.setState({ elementDelete: { el, index } });
+class App extends Component {
+  state = {
+    products: productData,
+    cartSum: 0,
+    searchString: "",
+    isConfirmationDelete: false,
+    productDelete: {},
   };
 
-  changeQuantity = (el, flag, index) => {
-    const { id, title, price, quantity, count } = el;
+  handleDeleteWindow = (value, element, index) => {
+    this.setState({
+      isConfirmationDelete: value,
+      productDelete: element,
+    });
+  };
+
+  handleQuantity = (element, flag) => {
+    const { id, title, price, quantity, count } = element;
 
     const newProducts = [...this.state.products];
 
+    const productIndex = this.state.products.findIndex((el) => el.id === id);
+
     if (quantity && count && !flag) {
-      newProducts[index] = {
+      newProducts.splice(productIndex, 1, {
         id,
         title,
         price,
         quantity: quantity - 1,
         count: count + 1,
-      };
-
-      this.setState({
-        sum: this.state.sum + price,
       });
+
+      this.setState((prev) => ({
+        cartSum: prev.cartSum + price,
+      }));
     }
     if (count && flag) {
-      newProducts[index] = {
-        ...newProducts[index],
+      newProducts.splice(productIndex, 1, {
+        id,
+        title,
+        price,
         quantity: quantity + 1,
         count: count - 1,
-      };
-
-      this.setState({
-        sum: this.state.sum - price,
       });
+
+      this.setState((prev) => ({ cartSum: prev.cartSum - price }));
     }
     this.setState({ products: newProducts });
   };
 
-  addProduct = (el, index) => {
-    const { price, quantity, count } = el;
+  handleAddProduct = (product) => {
+    const { price, quantity, count, id, title } = product;
 
     const newProducts = [...this.state.products];
 
-    newProducts[index] = {
-      ...newProducts[index],
+    const productIndex = this.state.products.findIndex((el) => el.id === id);
+
+    newProducts.splice(productIndex, 1, {
+      id,
+      title,
+      price,
       quantity: quantity - 1,
       count: count + 1,
-    };
-
-    this.setState({ products: newProducts });
-
-    this.setState({
-      sum: this.state.sum + price,
     });
+
+    this.setState((perv) => ({
+      cartSum: perv.cartSum + price,
+      products: newProducts,
+    }));
   };
 
-  deleteProduct = (value, elenent) => {
-    this.openDeleteWindow(value);
-
-    const { el, index } = elenent;
+  handleDeleteProduct = (isWindowDialog, productDelete) => {
+    this.handleDeleteWindow(isWindowDialog);
 
     const newProducts = [...this.state.products];
 
-    if (el.count >= 1) {
-      const { quantity, count } = productData.find((item) => item.id === el.id);
+    if (productDelete.count >= 1) {
+      const product = productData.find(
+        ((item) => item.id === productDelete.id) || {}
+      );
+      const { quantity, count, id, title, price } = product;
 
-      const product = this.state.products[index];
+      const productIndex = this.state.products.findIndex((el) => el.id === id);
 
-      const sumProduct = product.count * product.price;
-
-      this.setState({
-        sum: this.state.sum - sumProduct,
-      });
-
-      newProducts[index] = {
-        ...newProducts[index],
+      newProducts.splice(productIndex, 1, {
+        id,
+        title,
+        price,
         quantity,
         count,
-      };
+      });
 
-      this.setState({ products: newProducts });
+      this.setState((prev) => ({
+        products: newProducts,
+        cartSum: prev.cartSum - productDelete.count * productDelete.price,
+      }));
     }
   };
 
   handleSearchChange = (event) => {
-    if (event.target.value.length) {
-      this.setState({ titleFind: event.target.value });
-    } else {
-      this.setState({
-        titleFind: "",
-      });
-    }
+    event.target.value || ""
+      ? this.setState({ searchString: event.target.value })
+      : this.setState({
+          searchString: "",
+        });
   };
 
   render() {
     return (
       <>
         <Search
-          titleFind={this.state.titleFind}
-          handleSearchChange={this.handleSearchChange}
-          sum={this.state.sum}
+          searchString={this.state.searchString}
+          onHandleSearchChange={this.handleSearchChange}
+          cartSum={this.state.cartSum}
         />
         <Products
-          openDeleteWindow={this.openDeleteWindow}
-          productList={this.productList}
+          onHandleDeleteWindow={this.handleDeleteWindow}
           products={this.state.products}
-          changeQuantity={this.changeQuantity}
-          addProduct={this.addProduct}
-          deleteProduct={this.deleteProduct}
-          titleFind={this.state.titleFind}
+          onHandleQuantity={this.handleQuantity}
+          onHandleAddProduct={this.handleAddProduct}
+          onHandleDeleteProduct={this.handleDeleteProduct}
+          searchString={this.state.searchString}
         />
         <Footer />
-        {this.state.confirmationDelete && (
-          <DeleteProduct
-            confirmationDelete={this.state.confirmationDelete}
-            elementDelete={this.state.elementDelete}
-            openDeleteWindow={this.openDeleteWindow}
-            deleteProduct={this.deleteProduct}
-          />
-        )}
+        <DeletionNotification
+          isConfirmationDelete={this.state.isConfirmationDelete}
+          productDelete={this.state.productDelete}
+          onHandleDeleteWindow={this.handleDeleteWindow}
+          onHandleDeleteProduct={this.handleDeleteProduct}
+        />
+
         <ToastContainer />
       </>
     );

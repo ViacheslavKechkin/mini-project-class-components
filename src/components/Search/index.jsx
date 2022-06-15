@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 import "./style.scss";
 
 class Search extends PureComponent {
-  findProduct = (e) => {
+  handleFindProduct = (e) => {
     e.preventDefault();
-    if (!this.props.titleFind) {
+
+    if (!this.props.searchString) {
       toast.error("Напишите название товара", {
         position: "bottom-right",
         autoClose: 2000,
@@ -16,23 +17,25 @@ class Search extends PureComponent {
   };
 
   render() {
-    const { sum, titleFind, handleSearchChange } = this.props;
+    const { cartSum, searchString, onHandleSearchChange } = this.props;
 
     return (
       <header>
-        <form onSubmit={this.findProduct} className="find-wrapper">
+        <form onSubmit={this.handleFindProduct} className="find-wrapper">
           <input
             id="title"
-            name="title"
+            name="search"
             type="text"
             placeholder="Название товара"
             className="search-product"
-            value={titleFind}
-            onChange={handleSearchChange}
+            value={searchString}
+            onChange={onHandleSearchChange}
           />
-          <button className="btn-search">Поиск</button>
+          <button type="submit" className="btn-search">
+            Поиск
+          </button>
           <p className="sum-product">
-            Общая стоимость выбранных блюд: {sum} р.
+            Общая стоимость выбранных блюд: {cartSum} р.
           </p>
         </form>
       </header>

@@ -1,7 +1,6 @@
 import React from "react";
 
 import { styled } from "@mui/material/styles";
-
 import {
   Button,
   Dialog,
@@ -10,8 +9,6 @@ import {
   DialogActions,
 } from "@mui/material";
 
-import "./style.scss";
-
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -19,18 +16,21 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
+  ".MuiTypography-root": {
+    padding: 15,
+  },
 }));
 
-const DeleteProduct = ({
-  confirmationDelete,
-  elementDelete,
-  openDeleteWindow,
-  deleteProduct,
+const DeletionNotification = ({
+  isConfirmationDelete,
+  productDelete,
+  onHandleDeleteWindow,
+  onHandleDeleteProduct,
 }) => (
   <BootstrapDialog
     className="delete-wrapper"
     aria-labelledby="customized-dialog-title"
-    open={confirmationDelete}
+    open={isConfirmationDelete}
   >
     <Typography id="customized-dialog-title">Подтвердите удаление</Typography>
     <DialogContent dividers>
@@ -39,11 +39,11 @@ const DeleteProduct = ({
       </Typography>
     </DialogContent>
     <DialogActions>
-      <Button onClick={() => openDeleteWindow(false)} className="button">
+      <Button onClick={() => onHandleDeleteWindow(false)} className="button">
         Закрыть
       </Button>
       <Button
-        onClick={() => deleteProduct(false, elementDelete)}
+        onClick={() => onHandleDeleteProduct(false, productDelete)}
         className="button"
       >
         Удалить
@@ -51,4 +51,5 @@ const DeleteProduct = ({
     </DialogActions>
   </BootstrapDialog>
 );
-export default DeleteProduct;
+
+export default DeletionNotification;

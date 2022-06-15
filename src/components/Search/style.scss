@@ -22,9 +22,10 @@ header {
     font-size: 15px;
     border-radius: 2px;
     cursor: pointer;
-  }
-  .btn-search:hover {
-    box-shadow: 0 0 5px #5cf143;
+
+    &:hover {
+      box-shadow: 0 0 5px #5cf143;
+    }
   }
 
   .search-product {
@@ -41,8 +42,11 @@ header {
   }
 }
 
-@media screen and (max-width: 614px) {
+@media screen and (max-width: 768px) {
   .find-wrapper {
     flex-direction: column;
+    .sum-product {
+      text-align: center;
+    }
   }
 }
