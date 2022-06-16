@@ -9,28 +9,28 @@ class Products extends PureComponent {
     const {
       products,
       searchString,
-      onHandleDeleteWindow,
-      onHandleAddProduct,
-      onHandleQuantity,
+      onDeletedWindow,
+      onAddProduct,
+      onChangeQuantity,
     } = this.props;
+
+    const listProducts = products.filter((el) =>
+      el.title.toLowerCase().includes(searchString.toLowerCase())
+    );
 
     return (
       <main>
         <div className="product-wrapper">
-          {products.map((el, index) => {
-            const { id, title } = el;
+          {listProducts.map((el) => {
+            const { id } = el;
             return (
-              title.toLowerCase().includes(searchString.toLowerCase()) && (
-                <div key={`id-${id}`}>
-                  <Product
-                    el={el}
-                    index={index}
-                    onHandleDeleteWindow={onHandleDeleteWindow}
-                    onHandleAddProduct={onHandleAddProduct}
-                    onHandleQuantity={onHandleQuantity}
-                  />
-                </div>
-              )
+              <Product
+                key={`product-${id}`}
+                el={el}
+                onDeletedWindow={onDeletedWindow}
+                onAddProduct={onAddProduct}
+                onChangeQuantity={onChangeQuantity}
+              />
             );
           })}
         </div>

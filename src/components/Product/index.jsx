@@ -8,28 +8,18 @@ import "./style.scss";
 
 class Product extends PureComponent {
   render() {
-    const {
-      onHandleDeleteWindow,
-      onHandleAddProduct,
-      onHandleQuantity,
-      el,
-      index,
-    } = this.props;
+    const { onDeletedWindow, onAddProduct, onChangeQuantity, el } = this.props;
 
     const { id, title, price, count, quantity } = el;
 
     return (
       <div
         className={count ? "product product--green" : "product"}
-        key={`id-${id}`}
+        key={`product-${id}`}
       >
         <div
           className="product-container"
-          onClick={() =>
-            count
-              ? onHandleDeleteWindow(true, el, index)
-              : onHandleAddProduct(el)
-          }
+          onClick={() => (count ? onDeletedWindow(true, el) : onAddProduct(el))}
         >
           <div className="product__img-wrapper">
             <img className="product__img" src={productImg} alt="product-img" />
@@ -43,7 +33,7 @@ class Product extends PureComponent {
         <div className="product__function">
           <button
             className="product__button"
-            onClick={() => onHandleQuantity(el, true)}
+            onClick={() => onChangeQuantity(el, true)}
           >
             <img
               className={
@@ -58,14 +48,10 @@ class Product extends PureComponent {
           <div className="product__quantity">{count}</div>
           <button
             className="product__button"
-            onClick={() => onHandleQuantity(el, false)}
+            onClick={() => onChangeQuantity(el, false)}
           >
             <img
-              className={
-                count
-                  ? "product__icon"
-                  : "product__icon product__icon--inactive"
-              }
+              className={count ? "product__icon" : "product__icon"}
               src={plus}
               alt="increase"
             />

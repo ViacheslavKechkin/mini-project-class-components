@@ -22,15 +22,15 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const DeletionNotification = ({
-  isConfirmationDelete,
-  productDelete,
-  onHandleDeleteWindow,
-  onHandleDeleteProduct,
+  isOpenDeleteWindow,
+  deletedProduct,
+  onDeletedWindow,
+  onDeleteProduct,
 }) => (
   <BootstrapDialog
     className="delete-wrapper"
     aria-labelledby="customized-dialog-title"
-    open={isConfirmationDelete}
+    open={isOpenDeleteWindow}
   >
     <Typography id="customized-dialog-title">Подтвердите удаление</Typography>
     <DialogContent dividers>
@@ -39,11 +39,11 @@ const DeletionNotification = ({
       </Typography>
     </DialogContent>
     <DialogActions>
-      <Button onClick={() => onHandleDeleteWindow(false)} className="button">
+      <Button onClick={() => onDeletedWindow(false)} className="button">
         Закрыть
       </Button>
       <Button
-        onClick={() => onHandleDeleteProduct(false, productDelete)}
+        onClick={() => onDeleteProduct(deletedProduct)}
         className="button"
       >
         Удалить

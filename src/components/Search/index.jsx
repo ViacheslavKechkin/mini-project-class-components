@@ -17,7 +17,7 @@ class Search extends PureComponent {
   };
 
   render() {
-    const { cartSum, searchString, onHandleSearchChange } = this.props;
+    const { cartSum, searchString, onSearchChange } = this.props;
 
     return (
       <header>
@@ -29,13 +29,13 @@ class Search extends PureComponent {
             placeholder="Название товара"
             className="search-product"
             value={searchString}
-            onChange={onHandleSearchChange}
+            onChange={onSearchChange}
           />
           <button type="submit" className="btn-search">
             Поиск
           </button>
           <p className="sum-product">
-            Общая стоимость выбранных блюд: {cartSum} р.
+            Общая стоимость выбранных продуктов: {cartSum} р.
           </p>
         </form>
       </header>
