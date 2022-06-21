@@ -8,9 +8,9 @@ import "./style.scss";
 
 class Product extends PureComponent {
   render() {
-    const { onDeletedWindow, onAddProduct, onChangeQuantity, el } = this.props;
+    const { onDelete, onAddProduct, onChangeQuantity, product } = this.props;
 
-    const { id, title, price, count, quantity } = el;
+    const { id, title, price, count, quantity } = product;
 
     return (
       <div
@@ -19,7 +19,9 @@ class Product extends PureComponent {
       >
         <div
           className="product-container"
-          onClick={() => (count ? onDeletedWindow(true, el) : onAddProduct(el))}
+          onClick={() =>
+            count ? onDelete(true, product) : onAddProduct(product)
+          }
         >
           <div className="product__img-wrapper">
             <img className="product__img" src={productImg} alt="product-img" />
@@ -33,7 +35,7 @@ class Product extends PureComponent {
         <div className="product__function">
           <button
             className="product__button"
-            onClick={() => onChangeQuantity(el, true)}
+            onClick={() => onChangeQuantity(product, true)}
           >
             <img
               className={
@@ -48,7 +50,7 @@ class Product extends PureComponent {
           <div className="product__quantity">{count}</div>
           <button
             className="product__button"
-            onClick={() => onChangeQuantity(el, false)}
+            onClick={() => onChangeQuantity(product, false)}
           >
             <img
               className={count ? "product__icon" : "product__icon"}

@@ -17,21 +17,21 @@ class App extends Component {
     cartSum: 0,
     searchString: "",
     isOpenDeleteWindow: false,
-    deletedProduct: {},
+    selectedProduct: {},
   };
 
-  handleDeletedWindow = (isOpen, element) => {
+  handleDelete = (isOpen, product) => {
     this.setState({
       isOpenDeleteWindow: isOpen,
-      deletedProduct: element,
+      selectedProduct: product,
     });
   };
 
-  handleChangeQuantity = (element, flag) => {
-    const { id, title, price, quantity, count } = element;
+  handleChangeQuantity = (product, flag) => {
+    const { id, title, price, quantity, count } = product;
 
     if (!count) {
-      this.handleAddProduct(element);
+      this.handleAddProduct(product);
     } else {
       const newProducts = [...this.state.products];
 
@@ -46,9 +46,13 @@ class App extends Component {
           count: count + 1,
         });
 
-        this.setState((prev) => ({
-          cartSum: prev.cartSum + price,
-        }));
+        this.setState((prev) => {
+          const { cartSum } = prev;
+
+          return {
+            cartSum: cartSum + price,
+          };
+        });
       }
       if (count && flag) {
         newProducts.splice(productIndex, 1, {
@@ -59,7 +63,11 @@ class App extends Component {
           count: count - 1,
         });
 
-        this.setState((prev) => ({ cartSum: prev.cartSum - price }));
+        this.setState((prev) => {
+          const { cartSum } = prev;
+
+          return { cartSum: cartSum - price };
+        });
       }
       this.setState({ products: newProducts });
     }
@@ -80,19 +88,25 @@ class App extends Component {
       count: count + 1,
     });
 
-    this.setState((prev) => ({
-      cartSum: prev.cartSum + price,
-      products: newProducts,
-    }));
+    this.setState((prev) => {
+      const { cartSum } = prev;
+
+      return {
+        cartSum: cartSum + price,
+        products: newProducts,
+      };
+    });
   };
 
-  handleDeleteProduct = (deletedProduct) => {
-    this.handleDeletedWindow(!this.state.isOpenDeleteWindow);
+  handleDeleteProduct = (selectedProduct) => {
+    this.handleDelete(!this.state.isOpenDeleteWindow);
 
     const newProducts = [...this.state.products];
 
-    if (deletedProduct.count >= 1) {
-      const product = productData.find((item) => item.id === deletedProduct.id);
+    if (selectedProduct.count >= 1) {
+      const product = productData.find(
+        (item) => item.id === selectedProduct.id
+      );
 
       if (product) {
         const { quantity, count, id, title, price } = product;
@@ -114,10 +128,14 @@ class App extends Component {
               autoClose: 2000,
             });
 
-        this.setState((prev) => ({
-          products: newProducts,
-          cartSum: prev.cartSum - deletedProduct.count * deletedProduct.price,
-        }));
+        this.setState((prev) => {
+          const { cartSum } = prev;
+
+          return {
+            products: newProducts,
+            cartSum: cartSum - selectedProduct.count * selectedProduct.price,
+          };
+        });
       } else {
         toast.error("Продукт не найден !", {
           position: "bottom-right",
@@ -128,13 +146,7 @@ class App extends Component {
   };
 
   handleSearchChange = (event) => {
-    this.setState(
-      event.target.value || ""
-        ? { searchString: event.target.value }
-        : {
-            searchString: "",
-          }
-    );
+    this.setState({ searchString: event.target.value });
   };
 
   render() {
@@ -146,7 +158,7 @@ class App extends Component {
           cartSum={this.state.cartSum}
         />
         <Products
-          onDeletedWindow={this.handleDeletedWindow}
+          onDelete={this.handleDelete}
           products={this.state.products}
           onChangeQuantity={this.handleChangeQuantity}
           onAddProduct={this.handleAddProduct}
@@ -155,8 +167,8 @@ class App extends Component {
         <Footer />
         <DeletionNotification
           isOpenDeleteWindow={this.state.isOpenDeleteWindow}
-          deletedProduct={this.state.deletedProduct}
-          onDeletedWindow={this.handleDeletedWindow}
+          selectedProduct={this.state.selectedProduct}
+          onDelete={this.handleDelete}
           onDeleteProduct={this.handleDeleteProduct}
         />
 

@@ -23,8 +23,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const DeletionNotification = ({
   isOpenDeleteWindow,
-  deletedProduct,
-  onDeletedWindow,
+  selectedProduct,
+  onDelete,
   onDeleteProduct,
 }) => (
   <BootstrapDialog
@@ -39,11 +39,11 @@ const DeletionNotification = ({
       </Typography>
     </DialogContent>
     <DialogActions>
-      <Button onClick={() => onDeletedWindow(false)} className="button">
+      <Button onClick={() => onDelete(false)} className="button">
         Закрыть
       </Button>
       <Button
-        onClick={() => onDeleteProduct(deletedProduct)}
+        onClick={() => onDeleteProduct(selectedProduct)}
         className="button"
       >
         Удалить
