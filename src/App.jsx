@@ -46,13 +46,9 @@ class App extends Component {
           count: count + 1,
         });
 
-        this.setState((prev) => {
-          const { cartSum } = prev;
-
-          return {
-            cartSum: cartSum + price,
-          };
-        });
+        this.setState(({ cartSum }) => ({
+          cartSum: cartSum + price,
+        }));
       }
       if (count && flag) {
         newProducts.splice(productIndex, 1, {
@@ -63,11 +59,7 @@ class App extends Component {
           count: count - 1,
         });
 
-        this.setState((prev) => {
-          const { cartSum } = prev;
-
-          return { cartSum: cartSum - price };
-        });
+        this.setState(({ cartSum }) => ({ cartSum: cartSum - price }));
       }
       this.setState({ products: newProducts });
     }
@@ -88,14 +80,10 @@ class App extends Component {
       count: count + 1,
     });
 
-    this.setState((prev) => {
-      const { cartSum } = prev;
-
-      return {
-        cartSum: cartSum + price,
-        products: newProducts,
-      };
-    });
+    this.setState(({ cartSum }) => ({
+      cartSum: cartSum + price,
+      products: newProducts,
+    }));
   };
 
   handleDeleteProduct = (selectedProduct) => {
@@ -128,14 +116,10 @@ class App extends Component {
               autoClose: 2000,
             });
 
-        this.setState((prev) => {
-          const { cartSum } = prev;
-
-          return {
-            products: newProducts,
-            cartSum: cartSum - selectedProduct.count * selectedProduct.price,
-          };
-        });
+        this.setState(({ cartSum }) => ({
+          products: newProducts,
+          cartSum: cartSum - selectedProduct.count * selectedProduct.price,
+        }));
       } else {
         toast.error("Продукт не найден !", {
           position: "bottom-right",
