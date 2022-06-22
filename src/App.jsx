@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import Footer from "./components/Footer";
 import Search from "./components/Search";
 import Products from "./components/Products";
-import DeletionNotification from "./components/DeletionNotification";
+import DeleteProductNotification from "./components/DeleteProductNotification";
+
+import showError from "../src/utils/index";
 
 import productData from "./const/products.json";
 
@@ -20,14 +22,14 @@ class App extends Component {
     selectedProduct: {},
   };
 
-  handleDelete = (isOpen, product) => {
+  handleChangeNotification = (isOpen, product) => {
     this.setState({
       isOpenDeleteWindow: isOpen,
       selectedProduct: product,
     });
   };
 
-  handleChangeQuantity = (product, flag) => {
+  handleChangeQuantity = ({ product, add }) => {
     const { id, title, price, quantity, count } = product;
 
     if (!count) {
@@ -37,7 +39,7 @@ class App extends Component {
 
       const productIndex = this.state.products.findIndex((el) => el.id === id);
 
-      if (quantity && count && !flag) {
+      if (quantity && count && !add) {
         newProducts.splice(productIndex, 1, {
           id,
           title,
@@ -50,7 +52,7 @@ class App extends Component {
           cartSum: cartSum + price,
         }));
       }
-      if (count && flag) {
+      if (count && add) {
         newProducts.splice(productIndex, 1, {
           id,
           title,
@@ -87,7 +89,7 @@ class App extends Component {
   };
 
   handleDeleteProduct = (selectedProduct) => {
-    this.handleDelete(!this.state.isOpenDeleteWindow);
+    this.handleChangeNotification(!this.state.isOpenDeleteWindow);
 
     const newProducts = [...this.state.products];
 
@@ -111,20 +113,14 @@ class App extends Component {
               quantity,
               count,
             })
-          : toast.error("Продукт не найден !", {
-              position: "bottom-right",
-              autoClose: 2000,
-            });
+          : showError("Продукт не найден !");
 
         this.setState(({ cartSum }) => ({
           products: newProducts,
           cartSum: cartSum - selectedProduct.count * selectedProduct.price,
         }));
       } else {
-        toast.error("Продукт не найден !", {
-          position: "bottom-right",
-          autoClose: 2000,
-        });
+        showError("Продукт не найден !");
       }
     }
   };
@@ -142,17 +138,17 @@ class App extends Component {
           cartSum={this.state.cartSum}
         />
         <Products
-          onDelete={this.handleDelete}
+          onChangeNotification={this.handleChangeNotification}
           products={this.state.products}
           onChangeQuantity={this.handleChangeQuantity}
           onAddProduct={this.handleAddProduct}
           searchString={this.state.searchString}
         />
         <Footer />
-        <DeletionNotification
+        <DeleteProductNotification
           isOpenDeleteWindow={this.state.isOpenDeleteWindow}
           selectedProduct={this.state.selectedProduct}
-          onDelete={this.handleDelete}
+          onChangeNotification={this.handleChangeNotification}
           onDeleteProduct={this.handleDeleteProduct}
         />
 

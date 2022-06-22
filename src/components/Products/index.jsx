@@ -6,8 +6,13 @@ import "./style.scss";
 
 class Products extends PureComponent {
   render() {
-    const { products, searchString, onDelete, onAddProduct, onChangeQuantity } =
-      this.props;
+    const {
+      products,
+      searchString,
+      onChangeNotification,
+      onAddProduct,
+      onChangeQuantity,
+    } = this.props;
 
     const listProducts = products.filter((el) =>
       el.title.toLowerCase().includes(searchString.toLowerCase())
@@ -20,7 +25,7 @@ class Products extends PureComponent {
             <Product
               key={`product-${id}`}
               product={{ id, ...product }}
-              onDelete={onDelete}
+              onChangeNotification={onChangeNotification}
               onAddProduct={onAddProduct}
               onChangeQuantity={onChangeQuantity}
             />

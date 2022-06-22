@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 
-import { toast } from "react-toastify";
+import showError from "../../utils/index";
 
 import "./style.scss";
 
@@ -8,12 +8,7 @@ class Search extends PureComponent {
   handleFindProduct = (e) => {
     e.preventDefault();
 
-    if (!this.props.searchString) {
-      toast.error("Напишите название товара", {
-        position: "bottom-right",
-        autoClose: 2000,
-      });
-    }
+    !this.props.searchString && showError("Напишите название товара");
   };
 
   render() {

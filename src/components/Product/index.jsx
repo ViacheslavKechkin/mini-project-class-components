@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
 
+import Button from "../../primitive/Button";
+
 import plus from "./assets/icon/plus.svg";
 import minus from "./assets/icon/minus.svg";
 import productImg from "./assets/product.jpeg";
@@ -8,7 +10,8 @@ import "./style.scss";
 
 class Product extends PureComponent {
   render() {
-    const { onDelete, onAddProduct, onChangeQuantity, product } = this.props;
+    const { onChangeNotification, onAddProduct, onChangeQuantity, product } =
+      this.props;
 
     const { id, title, price, count, quantity } = product;
 
@@ -20,7 +23,7 @@ class Product extends PureComponent {
         <div
           className="product-container"
           onClick={() =>
-            count ? onDelete(true, product) : onAddProduct(product)
+            count ? onChangeNotification(true, product) : onAddProduct(product)
           }
         >
           <div className="product__img-wrapper">
@@ -33,31 +36,25 @@ class Product extends PureComponent {
           </div>
         </div>
         <div className="product__function">
-          <button
-            className="product__button"
-            onClick={() => onChangeQuantity(product, true)}
-          >
-            <img
-              className={
-                count
-                  ? "product__icon"
-                  : "product__icon product__icon--inactive"
-              }
-              src={minus}
-              alt="decrease"
-            />
-          </button>
+          <Button
+            product={product}
+            count={count}
+            action={minus}
+            onChangeQuantity={onChangeQuantity}
+            buttonStyle={"product__icon product__icon--inactive"}
+            add={true}
+            description={"decrease"}
+          />
           <div className="product__quantity">{count}</div>
-          <button
-            className="product__button"
-            onClick={() => onChangeQuantity(product, false)}
-          >
-            <img
-              className={count ? "product__icon" : "product__icon"}
-              src={plus}
-              alt="increase"
-            />
-          </button>
+          <Button
+            product={product}
+            count={count}
+            action={plus}
+            onChangeQuantity={onChangeQuantity}
+            buttonStyle={"product__icon"}
+            add={false}
+            description={"increase"}
+          />
         </div>
       </div>
     );
