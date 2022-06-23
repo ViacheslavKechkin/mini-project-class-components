@@ -1,0 +1,20 @@
+main {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 120px;
+}
+
+.product-wrapper {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    margin-top: 204px;
+  }
+}

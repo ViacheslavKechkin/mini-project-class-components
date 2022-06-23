@@ -1,0 +1,52 @@
+header {
+  background-color: white;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.find-wrapper {
+  border-bottom: 2px solid rgb(176, 174, 174);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  font-size: 15px;
+  padding: 40px 20px;
+
+  .btn-search {
+    font-weight: 700;
+    padding: 10px 20px;
+    background-color: #c6c6c6;
+    border: none;
+    font-size: 15px;
+    border-radius: 2px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 5px #5cf143;
+    }
+  }
+
+  .search-product {
+    padding: 10px 20px;
+    background-color: #c6c6c6;
+    border: none;
+    border-radius: 2px;
+    font-size: 15px;
+  }
+
+  .sum-product {
+    font-size: 19px;
+    word-wrap: break-word;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .find-wrapper {
+    flex-direction: column;
+    .sum-product {
+      text-align: center;
+    }
+  }
+}
