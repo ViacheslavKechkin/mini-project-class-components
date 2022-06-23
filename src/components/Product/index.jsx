@@ -38,23 +38,27 @@ class Product extends PureComponent {
         <div className="product__function">
           <Button
             product={product}
-            count={count}
-            action={minus}
             onChangeQuantity={onChangeQuantity}
-            buttonStyle={"product__icon product__icon--inactive"}
             add={true}
-            description={"decrease"}
-          />
+          >
+            <img
+              className={
+                count
+                  ? "product__icon"
+                  : "product__icon product__icon--inactive"
+              }
+              src={minus}
+              alt={"decrease"}
+            />
+          </Button>
           <div className="product__quantity">{count}</div>
           <Button
             product={product}
-            count={count}
-            action={plus}
             onChangeQuantity={onChangeQuantity}
-            buttonStyle={"product__icon"}
             add={false}
-            description={"increase"}
-          />
+          >
+            <img className={"product__icon"} src={plus} alt={"increase"} />
+          </Button>
         </div>
       </div>
     );

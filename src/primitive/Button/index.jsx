@@ -2,26 +2,16 @@ import React, { Component } from "react";
 
 class Button extends Component {
   render() {
-    const {
-      product,
-      count,
-      action,
-      onChangeQuantity,
-      buttonStyle,
-      add,
-      description,
-    } = this.props;
+    const { product, onChangeQuantity, add, ...restProps } = this.props;
 
     return (
       <button
+        {...restProps}
         className="product__button"
+        type="button"
         onClick={() => onChangeQuantity({ product, add })}
       >
-        <img
-          className={count ? "product__icon" : { buttonStyle }}
-          src={action}
-          alt={description}
-        />
+        {this.props.children}
       </button>
     );
   }
