@@ -2,14 +2,14 @@ import React, { Component } from "react";
 
 class Button extends Component {
   render() {
-    const { onChangeQuantity, ...restProps } = this.props;
+    const { onClick, ...restProps } = this.props;
 
     return (
       <button
-        {...restProps}
         className="product__button"
         type="button"
-        onClick={onChangeQuantity}
+        onClick={onClick}
+        {...restProps}
       >
         {this.props.children}
       </button>

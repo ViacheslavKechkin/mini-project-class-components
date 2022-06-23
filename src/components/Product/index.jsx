@@ -36,9 +36,7 @@ class Product extends PureComponent {
           </div>
         </div>
         <div className="product__function">
-          <Button
-            onChangeQuantity={() => onChangeQuantity({ product, add: true })}
-          >
+          <Button onClick={() => onChangeQuantity({ product, add: true })}>
             <img
               className={
                 count
@@ -50,9 +48,7 @@ class Product extends PureComponent {
             />
           </Button>
           <div className="product__quantity">{count}</div>
-          <Button
-            onChangeQuantity={() => onChangeQuantity({ product, add: false })}
-          >
+          <Button onClick={() => onChangeQuantity({ product, add: false })}>
             <img className={"product__icon"} src={plus} alt={"increase"} />
           </Button>
         </div>
