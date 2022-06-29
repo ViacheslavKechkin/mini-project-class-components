@@ -1,13 +1,19 @@
 import React, { PureComponent } from "react";
 
-import showError from "../../utils/index";
+import showError from "../../utils/index.jsx";
 
 import "./style.scss";
 
-class Search extends PureComponent {
-  handleFindProduct = (e) => {
-    e.preventDefault();
+interface PropsSearch {
+  searchString: string,
+  onSearchChange: () => void,
+  cartSum: number,
+}
 
+class Search extends PureComponent<PropsSearch> {
+
+  handleFindProduct = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
     !this.props.searchString && showError("Напишите название товара");
   };
 

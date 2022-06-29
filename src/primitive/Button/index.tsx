@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 
-class Button extends Component {
+interface PropsButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: React.ReactNode,
+  onClick: () => void,
+}
+
+class Button extends Component<PropsButton> {
   render() {
     const { onClick, ...restProps } = this.props;
 

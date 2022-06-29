@@ -1,10 +1,20 @@
 import React, { PureComponent } from "react";
 
-import Product from "../Product";
+import Product from "../Product/index.tsx";
+
+import IProduct from "../../types/types"
 
 import "./style.scss";
 
-class Products extends PureComponent {
+interface PropsProducts {
+  products: IProduct[],
+  searchString: string,
+  onChangeNotification: (isOpen: boolean, product: IProduct) => void,
+  onAddProduct: (product: IProduct) => void,
+  onChangeQuantity: ({ product, add }: any) => void,
+}
+
+class Products extends PureComponent<PropsProducts> {
   render() {
     const {
       products,
@@ -14,7 +24,7 @@ class Products extends PureComponent {
       onChangeQuantity,
     } = this.props;
 
-    const listProducts = products.filter((el) =>
+    const listProducts: IProduct[] = products.filter((el) =>
       el.title.toLowerCase().includes(searchString.toLowerCase())
     );
 

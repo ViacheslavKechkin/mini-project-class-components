@@ -2,18 +2,28 @@ import React, { Component } from "react";
 
 import { ToastContainer } from "react-toastify";
 
-import Footer from "./components/Footer";
-import Search from "./components/Search";
-import Products from "./components/Products";
-import DeleteProductNotification from "./components/DeleteProductNotification";
+import Footer from "./components/Footer/index.jsx";
+import Search from "./components/Search/index.tsx";
+import Products from "./components/Products/index.tsx";
+import DeleteProductNotification from "./components/DeleteProductNotification/index.jsx";
 
-import showError from "../src/utils/index";
+import showError from "./utils/index.jsx";
 
 import productData from "./const/products.json";
 
+import IProduct from "../src/types/types"
+
 import "./App.scss";
 
-class App extends Component {
+interface StateApp {
+  products: IProduct[],
+  cartSum: number,
+  searchString: string,
+  isOpenDeleteWindow: boolean,
+  selectedProduct: IProduct,
+}
+
+class App extends Component<{}, StateApp> {
   state = {
     products: productData,
     cartSum: 0,
@@ -22,14 +32,14 @@ class App extends Component {
     selectedProduct: {},
   };
 
-  handleChangeNotification = (isOpen, product) => {
+  handleChangeNotification = (isOpen: boolean, product: IProduct): void => {
     this.setState({
       isOpenDeleteWindow: isOpen,
       selectedProduct: product,
     });
   };
 
-  handleChangeQuantity = ({ product, add }) => {
+  handleChangeQuantity = ({ product, add }: any): void => {
     const { id, title, price, quantity, count } = product;
 
     if (!count) {
@@ -67,7 +77,7 @@ class App extends Component {
     }
   };
 
-  handleAddProduct = (product) => {
+  handleAddProduct = (product: IProduct): void => {
     const { price, quantity, count, id, title } = product;
 
     const newProducts = [...this.state.products];
@@ -88,31 +98,31 @@ class App extends Component {
     }));
   };
 
-  handleDeleteProduct = (selectedProduct) => {
+  handleDeleteProduct = (selectedProduct: IProduct): void => {
     this.handleChangeNotification(!this.state.isOpenDeleteWindow);
 
     const newProducts = [...this.state.products];
 
     if (selectedProduct.count >= 1) {
       const product = productData.find(
-        (item) => item.id === selectedProduct.id
+        (item: IProduct) => item.id === selectedProduct.id
       );
 
       if (product) {
         const { quantity, count, id, title, price } = product;
 
         const productIndex = this.state.products.findIndex(
-          (el) => el.id === id
+          (el: IProduct) => el.id === id
         );
 
         productIndex >= 0
           ? newProducts.splice(productIndex, 1, {
-              id,
-              title,
-              price,
-              quantity,
-              count,
-            })
+            id,
+            title,
+            price,
+            quantity,
+            count,
+          })
           : showError("Продукт не найден !");
 
         this.setState(({ cartSum }) => ({
@@ -125,9 +135,8 @@ class App extends Component {
     }
   };
 
-  handleSearchChange = (event) => {
+  handleSearchChange = (event: React.FormEvent<HTMLFormElement>): void =>
     this.setState({ searchString: event.target.value });
-  };
 
   render() {
     return (
