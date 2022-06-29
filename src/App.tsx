@@ -20,8 +20,9 @@ interface StateApp {
   cartSum: number,
   searchString: string,
   isOpenDeleteWindow: boolean,
-  selectedProduct: IProduct,
+  selectedProduct: {},
 }
+
 
 class App extends Component<{}, StateApp> {
   state = {
@@ -32,11 +33,18 @@ class App extends Component<{}, StateApp> {
     selectedProduct: {},
   };
 
-  handleChangeNotification = (isOpen: boolean, product: IProduct): void => {
-    this.setState({
-      isOpenDeleteWindow: isOpen,
-      selectedProduct: product,
-    });
+  handleChangeNotification = (isOpen: boolean, product?: IProduct): void => {
+    if (isOpen && product) {
+      this.setState({
+        isOpenDeleteWindow: isOpen,
+        selectedProduct: product,
+      });
+    }
+    if (isOpen && !product) {
+      this.setState({
+        isOpenDeleteWindow: isOpen
+      });
+    }
   };
 
   handleChangeQuantity = ({ product, add }: any): void => {
@@ -47,7 +55,7 @@ class App extends Component<{}, StateApp> {
     } else {
       const newProducts = [...this.state.products];
 
-      const productIndex = this.state.products.findIndex((el) => el.id === id);
+      const productIndex = this.state.products.findIndex((el: IProduct) => el.id === id);
 
       if (quantity && count && !add) {
         newProducts.splice(productIndex, 1, {
@@ -82,7 +90,7 @@ class App extends Component<{}, StateApp> {
 
     const newProducts = [...this.state.products];
 
-    const productIndex = this.state.products.findIndex((el) => el.id === id);
+    const productIndex = this.state.products.findIndex((el: IProduct) => el.id === id);
 
     newProducts.splice(productIndex, 1, {
       id,
@@ -135,7 +143,7 @@ class App extends Component<{}, StateApp> {
     }
   };
 
-  handleSearchChange = (event: React.FormEvent<HTMLFormElement>): void =>
+  handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>): void =>
     this.setState({ searchString: event.target.value });
 
   render() {

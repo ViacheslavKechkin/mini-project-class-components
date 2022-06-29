@@ -6,7 +6,7 @@ import "./style.scss";
 
 interface PropsSearch {
   searchString: string,
-  onSearchChange: () => void,
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
   cartSum: number,
 }
 
@@ -30,7 +30,7 @@ class Search extends PureComponent<PropsSearch> {
             placeholder="Название товара"
             className="search-product"
             value={searchString}
-            onChange={onSearchChange}
+            onChange={(e) => onSearchChange(e)}
           />
           <button type="submit" className="btn-search">
             Поиск

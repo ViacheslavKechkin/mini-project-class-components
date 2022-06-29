@@ -5,7 +5,10 @@ interface PropsButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onClick: () => void,
 }
 
+
 class Button extends Component<PropsButton> {
+  private rootRef = React.createRef<HTMLButtonElement>();
+
   render() {
     const { onClick, ...restProps } = this.props;
 
@@ -14,6 +17,7 @@ class Button extends Component<PropsButton> {
         className="product__button"
         type="button"
         onClick={onClick}
+        ref={this.rootRef}
         {...restProps}
       >
         {this.props.children}
