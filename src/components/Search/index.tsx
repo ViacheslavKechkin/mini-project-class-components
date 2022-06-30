@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 
-import showError from "../../utils/index.jsx";
+import showError from "../../utils";
 
 import "./style.scss";
 

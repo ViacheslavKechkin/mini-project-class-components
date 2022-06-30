@@ -2,49 +2,47 @@ import React, { Component } from "react";
 
 import { ToastContainer } from "react-toastify";
 
-import Footer from "./components/Footer/index.jsx";
-import Search from "./components/Search/index.tsx";
-import Products from "./components/Products/index.tsx";
+import Footer from "./components/Footer";
+import Search from "./components/Search";
+import Products from "./components/Products";
 import DeleteProductNotification from "./components/DeleteProductNotification/index.jsx";
 
-import showError from "./utils/index.jsx";
+import showError from "./utils";
 
 import productData from "./const/products.json";
 
-import IProduct from "../src/types/types"
+import TProduct from "./types"
 
 import "./App.scss";
 
-interface StateApp {
-  products: IProduct[],
+interface AppState {
+  products: TProduct[],
   cartSum: number,
   searchString: string,
   isOpenDeleteWindow: boolean,
-  selectedProduct: {},
+  selectedProduct: TProduct | null,
 }
 
-
-class App extends Component<{}, StateApp> {
+class App extends Component<never, AppState> {
   state = {
     products: productData,
     cartSum: 0,
     searchString: "",
     isOpenDeleteWindow: false,
-    selectedProduct: {},
+    selectedProduct: null,
   };
 
-  handleChangeNotification = (isOpen: boolean, product?: IProduct): void => {
-    if (isOpen && product) {
+  handleChangeNotification = (isOpen: boolean, product?: TProduct): void => {
+    product ?
       this.setState({
         isOpenDeleteWindow: isOpen,
         selectedProduct: product,
-      });
-    }
-    if (isOpen && !product) {
+      })
+      :
       this.setState({
         isOpenDeleteWindow: isOpen
-      });
-    }
+      })
+
   };
 
   handleChangeQuantity = ({ product, add }: any): void => {
@@ -55,7 +53,7 @@ class App extends Component<{}, StateApp> {
     } else {
       const newProducts = [...this.state.products];
 
-      const productIndex = this.state.products.findIndex((el: IProduct) => el.id === id);
+      const productIndex = this.state.products.findIndex((el: TProduct) => el.id === id);
 
       if (quantity && count && !add) {
         newProducts.splice(productIndex, 1, {
@@ -70,6 +68,7 @@ class App extends Component<{}, StateApp> {
           cartSum: cartSum + price,
         }));
       }
+
       if (count && add) {
         newProducts.splice(productIndex, 1, {
           id,
@@ -85,12 +84,12 @@ class App extends Component<{}, StateApp> {
     }
   };
 
-  handleAddProduct = (product: IProduct): void => {
+  handleAddProduct = (product: TProduct): void => {
     const { price, quantity, count, id, title } = product;
 
     const newProducts = [...this.state.products];
 
-    const productIndex = this.state.products.findIndex((el: IProduct) => el.id === id);
+    const productIndex = this.state.products.findIndex((el: TProduct) => el.id === id);
 
     newProducts.splice(productIndex, 1, {
       id,
@@ -106,21 +105,21 @@ class App extends Component<{}, StateApp> {
     }));
   };
 
-  handleDeleteProduct = (selectedProduct: IProduct): void => {
+  handleDeleteProduct = (selectedProduct: TProduct): void => {
     this.handleChangeNotification(!this.state.isOpenDeleteWindow);
 
     const newProducts = [...this.state.products];
 
     if (selectedProduct.count >= 1) {
       const product = productData.find(
-        (item: IProduct) => item.id === selectedProduct.id
+        (item: TProduct) => item.id === selectedProduct.id
       );
 
       if (product) {
         const { quantity, count, id, title, price } = product;
 
         const productIndex = this.state.products.findIndex(
-          (el: IProduct) => el.id === id
+          (el: TProduct) => el.id === id
         );
 
         productIndex >= 0
@@ -168,7 +167,6 @@ class App extends Component<{}, StateApp> {
           onChangeNotification={this.handleChangeNotification}
           onDeleteProduct={this.handleDeleteProduct}
         />
-
         <ToastContainer />
       </>
     );

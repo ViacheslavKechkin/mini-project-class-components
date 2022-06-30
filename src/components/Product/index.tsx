@@ -1,20 +1,20 @@
 import React, { PureComponent } from "react";
 
-import Button from "../../primitive/Button/index.tsx";
+import Button from "../../primitive/Button";
 
 import plus from "./assets/icon/plus.svg";
 import minus from "./assets/icon/minus.svg";
 import productImg from "./assets/product.jpeg";
 
-import IProduct from "../../types/types"
+import TProduct from "../../types"
 
 import "./style.scss";
 
 interface PropsProduct {
-  onChangeNotification: (isOpen: boolean, product: IProduct) => void,
-  onAddProduct: (product: IProduct) => void,
+  onChangeNotification: (isOpen: boolean, product: TProduct) => void,
+  onAddProduct: (product: TProduct) => void,
   onChangeQuantity: ({ product, add }: any) => void,
-  product: IProduct,
+  product: TProduct,
 }
 
 class Product extends PureComponent<PropsProduct> {

@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 
-interface PropsButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode,
-  onClick: () => void,
 }
 
-
-class Button extends Component<PropsButton> {
+class Button extends Component<IProps> {
   private rootRef = React.createRef<HTMLButtonElement>();
 
   render() {
