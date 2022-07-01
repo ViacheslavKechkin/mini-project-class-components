@@ -33,15 +33,10 @@ class App extends Component<never, AppState> {
   };
 
   handleChangeNotification = (isOpen: boolean, product?: TProduct) =>
-    product ?
-      this.setState({
-        isOpenDeleteWindow: isOpen,
-        selectedProduct: product,
-      })
-      :
-      this.setState({
-        isOpenDeleteWindow: isOpen
-      })
+    this.setState(({ selectedProduct }) => ({
+      isOpenDeleteWindow: isOpen,
+      selectedProduct: product || selectedProduct
+    }))
     ;
 
   handleChangeQuantity = ({ product, add }: TQuantityArg) => {
