@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 
 import Product from "../Product";
 
-import TProduct from "../../types"
+import { TProduct, TQuantityArg } from "../../types"
 
 import "./style.scss";
 
@@ -11,7 +11,7 @@ interface PropsProducts {
   searchString: string,
   onChangeNotification: (isOpen: boolean, product: TProduct) => void,
   onAddProduct: (product: TProduct) => void,
-  onChangeQuantity: ({ product, add }: any) => void,
+  onChangeQuantity: ({ product, add }: TQuantityArg) => void,
 }
 
 class Products extends PureComponent<PropsProducts> {
@@ -24,7 +24,7 @@ class Products extends PureComponent<PropsProducts> {
       onChangeQuantity,
     } = this.props;
 
-    const listProducts: TProduct[] = products.filter((el) =>
+    const listProducts = products.filter((el) =>
       el.title.toLowerCase().includes(searchString.toLowerCase())
     );
 

@@ -4,15 +4,15 @@ import showError from "../../utils";
 
 import "./style.scss";
 
-interface PropsSearch {
+interface IProps {
   searchString: string,
   onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
   cartSum: number,
 }
 
-class Search extends PureComponent<PropsSearch> {
+class Search extends PureComponent<IProps> {
 
-  handleFindProduct = (e: React.FormEvent<HTMLFormElement>): void => {
+  handleFindProduct = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     !this.props.searchString && showError("Напишите название товара");
   };

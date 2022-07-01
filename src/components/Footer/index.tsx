@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import "./style.scss";
 
-class Footer extends Component {
+class Footer extends Component<React.HTMLAttributes<HTMLElement>> {
   render() {
     return (
       <footer>

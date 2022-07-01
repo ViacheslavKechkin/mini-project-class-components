@@ -11,7 +11,7 @@ import showError from "./utils";
 
 import productData from "./const/products.json";
 
-import TProduct from "./types"
+import { TProduct, TQuantityArg } from "./types"
 
 import "./App.scss";
 
@@ -32,7 +32,7 @@ class App extends Component<never, AppState> {
     selectedProduct: null,
   };
 
-  handleChangeNotification = (isOpen: boolean, product?: TProduct): void => {
+  handleChangeNotification = (isOpen: boolean, product?: TProduct) =>
     product ?
       this.setState({
         isOpenDeleteWindow: isOpen,
@@ -42,10 +42,9 @@ class App extends Component<never, AppState> {
       this.setState({
         isOpenDeleteWindow: isOpen
       })
+    ;
 
-  };
-
-  handleChangeQuantity = ({ product, add }: any): void => {
+  handleChangeQuantity = ({ product, add }: TQuantityArg) => {
     const { id, title, price, quantity, count } = product;
 
     if (!count) {
@@ -53,7 +52,7 @@ class App extends Component<never, AppState> {
     } else {
       const newProducts = [...this.state.products];
 
-      const productIndex = this.state.products.findIndex((el: TProduct) => el.id === id);
+      const productIndex = this.state.products.findIndex((product: TProduct) => product.id === id);
 
       if (quantity && count && !add) {
         newProducts.splice(productIndex, 1, {
@@ -84,12 +83,12 @@ class App extends Component<never, AppState> {
     }
   };
 
-  handleAddProduct = (product: TProduct): void => {
+  handleAddProduct = (product: TProduct) => {
     const { price, quantity, count, id, title } = product;
 
     const newProducts = [...this.state.products];
 
-    const productIndex = this.state.products.findIndex((el: TProduct) => el.id === id);
+    const productIndex = this.state.products.findIndex((product: TProduct) => product.id === id);
 
     newProducts.splice(productIndex, 1, {
       id,
@@ -105,7 +104,7 @@ class App extends Component<never, AppState> {
     }));
   };
 
-  handleDeleteProduct = (selectedProduct: TProduct): void => {
+  handleDeleteProduct = (selectedProduct: TProduct) => {
     this.handleChangeNotification(!this.state.isOpenDeleteWindow);
 
     const newProducts = [...this.state.products];
@@ -119,7 +118,7 @@ class App extends Component<never, AppState> {
         const { quantity, count, id, title, price } = product;
 
         const productIndex = this.state.products.findIndex(
-          (el: TProduct) => el.id === id
+          (product: TProduct) => product.id === id
         );
 
         productIndex >= 0
@@ -142,7 +141,7 @@ class App extends Component<never, AppState> {
     }
   };
 
-  handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>): void =>
+  handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({ searchString: event.target.value });
 
   render() {

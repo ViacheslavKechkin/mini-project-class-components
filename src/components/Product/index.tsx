@@ -6,18 +6,18 @@ import plus from "./assets/icon/plus.svg";
 import minus from "./assets/icon/minus.svg";
 import productImg from "./assets/product.jpeg";
 
-import TProduct from "../../types"
+import { TProduct, TQuantityArg } from "../../types"
 
 import "./style.scss";
 
-interface PropsProduct {
+interface IProps {
   onChangeNotification: (isOpen: boolean, product: TProduct) => void,
   onAddProduct: (product: TProduct) => void,
-  onChangeQuantity: ({ product, add }: any) => void,
+  onChangeQuantity: ({ product, add }: TQuantityArg) => void,
   product: TProduct,
 }
 
-class Product extends PureComponent<PropsProduct> {
+class Product extends PureComponent<IProps> {
   render() {
     const { onChangeNotification, onAddProduct, onChangeQuantity, product } =
       this.props;

@@ -1,4 +1,4 @@
-type TProduct = {
+export type TProduct = {
     id: string,
     title: string,
     price: number,
@@ -6,4 +6,7 @@ type TProduct = {
     count: number,
 }
 
-export default TProduct
+export type TQuantityArg = {
+    product: TProduct,
+    add: boolean
+}
