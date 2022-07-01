@@ -2,9 +2,19 @@ import React, { PureComponent } from "react";
 
 import Product from "../Product";
 
+import { TProduct, TQuantityArg } from "../../types"
+
 import "./style.scss";
 
-class Products extends PureComponent {
+interface PropsProducts {
+  products: TProduct[],
+  searchString: string,
+  onChangeNotification: (isOpen: boolean, product: TProduct) => void,
+  onAddProduct: (product: TProduct) => void,
+  onChangeQuantity: ({ product, add }: TQuantityArg) => void,
+}
+
+class Products extends PureComponent<PropsProducts> {
   render() {
     const {
       products,

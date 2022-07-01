@@ -1,13 +1,19 @@
 import React, { PureComponent } from "react";
 
-import showError from "../../utils/index";
+import showError from "../../utils";
 
 import "./style.scss";
 
-class Search extends PureComponent {
-  handleFindProduct = (e) => {
-    e.preventDefault();
+interface IProps {
+  searchString: string,
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  cartSum: number,
+}
 
+class Search extends PureComponent<IProps> {
+
+  handleFindProduct = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     !this.props.searchString && showError("Напишите название товара");
   };
 
@@ -24,7 +30,7 @@ class Search extends PureComponent {
             placeholder="Название товара"
             className="search-product"
             value={searchString}
-            onChange={onSearchChange}
+            onChange={(e) => onSearchChange(e)}
           />
           <button type="submit" className="btn-search">
             Поиск
